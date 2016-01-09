@@ -6,6 +6,10 @@
 (function(window, document, exportName, undefined) {
   'use strict';
 
+  if (document === null) {
+    return;
+  }
+
 var VENDOR_PREFIXES = ['', 'webkit', 'Moz', 'MS', 'ms', 'o'];
 var TEST_ELEMENT = document.createElement('div');
 
@@ -130,7 +134,7 @@ if (typeof Object.assign !== 'function') {
  * means that properties in dest will be overwritten by the ones in src.
  * @param {Object} dest
  * @param {Object} src
- * @param {Boolean=false} [merge]
+ * @param {Boolean} [merge=false]
  * @returns {Object} dest
  */
 var extend = deprecate(function extend(dest, src, merge) {
@@ -2565,4 +2569,8 @@ if (typeof define === 'function' && define.amd) {
     window[exportName] = Hammer;
 }
 
-})(window, document, 'Hammer');
+})(
+    typeof window !== 'undefined' ? window : (typeof self !== 'undefined' ? self : {}),
+    typeof document !== 'undefined' ? document : null,
+    'Hammer'
+);
